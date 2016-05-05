@@ -30,7 +30,6 @@
 <script src="/signalr/hubs"></script>
 <!--SignalR script to update the chat page and send messages.--> 
 <script>
-    $(function () {
         var groupid = '@ViewBag.groupid';
         var myid = '';
         // Reference the auto-generated proxy for the hub.  
@@ -54,10 +53,9 @@
                 $('#message').val('').focus();
             });
             chat.server.join(t.id, groupid);
-            $('.js_siteurlQ').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=180x180&chl=' + encodeURIComponent(location.href + '?groupid=' + groupid));
-            $('.js_siteurlQA').attr('href', location.href + '?groupid=' + groupid);
+            $('.js_siteurlQ').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=180x180&chl=' + encodeURIComponent("http://" + location.host + location.pathname + '?groupid=' + groupid));
+            $('.js_siteurlQA').attr('href', "http://" + location.host + location.pathname + '?groupid=' + groupid);
         });
-    });
     // This optional function html-encodes messages for display in the page.
     function htmlEncode(value) {
         var encodedValue = $('<div />').text(value).html();
