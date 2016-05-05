@@ -54,7 +54,7 @@
                 $('#message').val('').focus();
             });
             chat.server.join(t.id, groupid);
-            $('.js_siteurlQ').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=180x180&chl=' + encodeURI(location.href + '&groupid=' + groupid));
+            $('.js_siteurlQ').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=180x180&chl=' + encodeURIComponent(location.href + '?groupid=' + groupid));
             $('.js_siteurlQA').attr('href', location.href + '?groupid=' + groupid);
         });
     });
