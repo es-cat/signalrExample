@@ -30,7 +30,29 @@
 <script src="/signalr/hubs"></script>
 <!--SignalR script to update the chat page and send messages.--> 
 <script>
+
+        var cookieCreate = function (name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + ";path=/";
+        };
+        var cookieRead = function (name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        };
+
         var groupid = '@ViewBag.groupid';
+        cookieCreate('group', groupid, 7);
         var myid = '';
         // Reference the auto-generated proxy for the hub.  
         var chat = $.connection.chatHub;
@@ -53,6 +75,7 @@
                 $('#message').val('').focus();
             });
             chat.server.join(t.id, groupid);
+            myid = t.id;
             $('.js_siteurlQ').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=180x180&chl=' + encodeURIComponent("http://" + location.host + location.pathname + '?groupid=' + groupid));
             $('.js_siteurlQA').attr('href', "http://" + location.host + location.pathname + '?groupid=' + groupid);
         });
